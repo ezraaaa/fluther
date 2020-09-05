@@ -18,6 +18,7 @@ class App extends StatelessWidget {
         title:
             '${strings.appTitle} ${FlavourConfig.instance.values.currentFlavour}',
         theme: getThemeData(context),
+        home: Scaffold(),
       ),
     );
   }
