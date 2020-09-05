@@ -9,8 +9,8 @@ void main() {
   Bloc.observer = CommonBlocObserver();
 
   FlavourConfig(
-    flavour: Flavour.development,
-    values: const FlavourValues(currentFlavour: 'Development'),
+    flavour: Flavour.production,
+    values: const FlavourValues(currentFlavour: ''),
   );
 
   runApp(AppStateProvider());
