@@ -12,6 +12,21 @@ ThemeData _buildTheme() {
     accentColor: Colors.amberAccent,
     primaryColorBrightness: Brightness.light,
     accentColorBrightness: Brightness.light,
+    appBarTheme: AppBarTheme(
+      color: Colors.white,
+      textTheme: _buildTextTheme(base.textTheme),
+      centerTitle: false,
+      brightness: Brightness.light,
+    ),
+    textSelectionColor: Colors.lightBlue.withOpacity(0.25),
+    textSelectionHandleColor: Colors.lightBlue,
+    scaffoldBackgroundColor: Colors.white,
+    canvasColor: Colors.white,
+    dialogTheme: DialogTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       disabledElevation: 0.0,
     ),
