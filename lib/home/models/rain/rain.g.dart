@@ -8,10 +8,10 @@ part of 'rain.dart';
 
 Rain _$RainFromJson(Map<String, dynamic> json) {
   return Rain(
-    d1h: (json['d1h'] as num)?.toDouble(),
+    oneHour: (json['1hr'] as num)?.toDouble(),
   );
 }
 
 Map<String, dynamic> _$RainToJson(Rain instance) => <String, dynamic>{
-      'd1h': instance.d1h,
+      '1hr': instance.oneHour,
     };
