@@ -8,46 +8,31 @@ part of 'location_weather.dart';
 
 LocationWeather _$LocationWeatherFromJson(Map<String, dynamic> json) {
   return LocationWeather(
-    coord: json['coord'] == null
+    lat: (json['lat'] as num)?.toDouble(),
+    lon: (json['lon'] as num)?.toDouble(),
+    timezone: json['timezone'] as String,
+    timezoneOffset: json['timezone_offset'] as int,
+    current: json['current'] == null
         ? null
-        : Coordinates.fromJson(json['coord'] as Map<String, dynamic>),
-    weather: (json['weather'] as List)
+        : Current.fromJson(json['current'] as Map<String, dynamic>),
+    minutely: (json['minutely'] as List)
         ?.map((e) =>
-            e == null ? null : Weather.fromJson(e as Map<String, dynamic>))
+            e == null ? null : Minutely.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    base: json['base'] as String,
-    main: json['main'] == null
-        ? null
-        : Temperature.fromJson(json['main'] as Map<String, dynamic>),
-    wind: json['wind'] == null
-        ? null
-        : Wind.fromJson(json['wind'] as Map<String, dynamic>),
-    clouds: json['clouds'] == null
-        ? null
-        : Clouds.fromJson(json['clouds'] as Map<String, dynamic>),
-    dt: json['dt'] as int,
-    sys: json['sys'] == null
-        ? null
-        : System.fromJson(json['sys'] as Map<String, dynamic>),
-    timezone: json['timezone'] as int,
-    id: json['id'] as int,
-    name: json['name'] as String,
-    cod: json['cod'] as int,
+    hourly: (json['hourly'] as List)
+        ?.map((e) =>
+            e == null ? null : Hourly.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
 Map<String, dynamic> _$LocationWeatherToJson(LocationWeather instance) =>
     <String, dynamic>{
-      'coord': instance.coord,
-      'weather': instance.weather,
-      'base': instance.base,
-      'main': instance.main,
-      'wind': instance.wind,
-      'clouds': instance.clouds,
-      'dt': instance.dt,
-      'sys': instance.sys,
+      'lat': instance.lat,
+      'lon': instance.lon,
       'timezone': instance.timezone,
-      'id': instance.id,
-      'name': instance.name,
-      'cod': instance.cod,
+      'timezone_offset': instance.timezoneOffset,
+      'current': instance.current,
+      'minutely': instance.minutely,
+      'hourly': instance.hourly,
     };
