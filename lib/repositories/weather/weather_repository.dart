@@ -1,1 +1,1 @@
-abstract class WeatherRepository {}
+class WeatherRepository {}
