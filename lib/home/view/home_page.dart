@@ -18,6 +18,65 @@ class HomePage extends StatelessWidget {
               SearchButton(),
             ],
           ),
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: const <Widget>[
+                ListTile(
+                  leading: Icon(Icons.location_on),
+                  title: Text(
+                    'Kuala Lumpur',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text('Sunday — September 6'),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    '31°',
+                    textAlign: TextAlign.center,
+                    textScaleFactor: 7.0,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                ListTile(
+                  title: Text(
+                    'Feels like 33°C. Few clouds. Light breeze',
+                    textScaleFactor: 1.1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                ListTile(
+                  title: Text('Wind: 3.1m/s SSE'),
+                  trailing: Text(
+                    'Humidity: 58%',
+                    textScaleFactor: 1.1,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                ListTile(
+                  title: Text('Hourly'),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Divider(),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

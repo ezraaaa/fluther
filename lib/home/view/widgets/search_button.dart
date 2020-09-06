@@ -10,7 +10,7 @@ class _SearchButtonState extends State<SearchButton> {
   Widget build(BuildContext context) {
     return IconButton(
       tooltip: 'Search Location',
-      icon: Icon(Icons.search),
+      icon: const Icon(Icons.search),
       onPressed: () {},
     );
   }
