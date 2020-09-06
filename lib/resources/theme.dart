@@ -40,7 +40,7 @@ ThemeData _buildTheme() {
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
     headline6: base.headline6.copyWith(
-      fontFamily: GoogleFonts.robotoCondensed().fontFamily,
+      fontFamily: GoogleFonts.assistant().fontFamily,
       fontSize: 24.0,
     ),
   );
