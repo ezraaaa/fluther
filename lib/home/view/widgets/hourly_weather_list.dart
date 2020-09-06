@@ -62,31 +62,25 @@ class _HourlyWeatherListState extends State<HourlyWeatherList> {
           final List<Hourly> hourlyWeather = state.locationWeather.hourly;
 
           return ListView.separated(
-            padding: const EdgeInsets.all(16.0),
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               final Hourly weather = hourlyWeather[index];
               final DateTime date =
                   DateTime.fromMillisecondsSinceEpoch(weather.dt * 1000);
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Stack(
-                  alignment: Alignment.center,
+              return ListTile(
+                title: Wrap(
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Wrap(
-                          children: <Widget>[
-                            Text(hourFormat.format(date) + ', '),
-                            Text(dateFormat.format(date))
-                          ],
-                        ),
-                        Text('${numberFormat.format(weather.temp)}°'),
-                      ],
-                    ),
+                    Text(hourFormat.format(date) + ', '),
+                    Text(dateFormat.format(date))
+                  ],
+                ),
+                trailing: Wrap(
+                  spacing: 16.0,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: <Widget>[
                     _buildWeatherIcon(weather.weather[0].main, date),
+                    Text('${numberFormat.format(weather.temp)}°'),
                   ],
                 ),
               );
