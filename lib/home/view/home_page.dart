@@ -59,7 +59,10 @@ class _HomePageState extends State<HomePage> {
               child: ListView(
                 children: <Widget>[
                   ListTile(
-                    leading: const Icon(Icons.location_on),
+                    leading: Icon(
+                      Icons.location_on,
+                      color: Theme.of(context).accentColor,
+                    ),
                     title: Text(
                       locationWeather.timezone,
                       style: const TextStyle(fontWeight: FontWeight.bold),
@@ -76,7 +79,10 @@ class _HomePageState extends State<HomePage> {
                       '${numberFormat.format(locationWeather.current.temp)}°',
                       textAlign: TextAlign.center,
                       textScaleFactor: 7.0,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
                   const SizedBox(
