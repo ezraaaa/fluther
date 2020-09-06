@@ -1,3 +1,4 @@
+import 'package:fluther/home/view/home_page.dart';
 import 'package:fluther/main/flavour_config.dart';
 import 'package:fluther/resources/strings.dart';
 import 'package:fluther/resources/theme.dart';
@@ -18,7 +19,7 @@ class App extends StatelessWidget {
         title:
             '${strings.appTitle} ${FlavourConfig.instance.values.currentFlavour}',
         theme: getThemeData(context),
-        home: Scaffold(),
+        home: HomePage(),
       ),
     );
   }
