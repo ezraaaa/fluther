@@ -1,6 +1,5 @@
 import 'package:fluther/home/blocs/weather/weather_bloc.dart';
 import 'package:fluther/home/models/location_weather/location_weather.dart';
-import 'package:fluther/home/view/widgets/hourly_weather_list.dart';
 import 'package:fluther/home/view/widgets/search_button.dart';
 import 'package:fluther/location/bloc/location/location_bloc.dart';
 import 'package:fluther/main/flavour_config.dart';
@@ -47,89 +46,65 @@ class _HomePageState extends State<HomePage> {
           if (state is WeatherLoadSuccess) {
             final LocationWeather locationWeather = state.locationWeather;
 
-            return BlocBuilder<LocationBloc, LocationState>(
-              builder: (BuildContext context, LocationState state) {
-                if (state is LocationRequestSuccess) {
-                  final Position position = state.position;
-
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      BlocProvider.of<WeatherBloc>(context).add(
-                        WeatherRefreshRequested(
-                          latitude: position.latitude,
-                          longitude: position.longitude,
-                        ),
-                      );
-                    },
-                    child: ListView(
+            return RefreshIndicator(
+              onRefresh: () async {
+                BlocProvider.of<WeatherBloc>(context).add(
+                  WeatherRefreshRequested(
+                    latitude: locationWeather.coordinates.latitude,
+                    longitude: locationWeather.coordinates.longitude,
+                  ),
+                );
+              },
+              child: ListView(
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(
+                      Icons.location_on,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    title: Text(
+                      locationWeather.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                        '${dayFormat.format(now)} — ${dateFormat.format(now)}'),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      '${numberFormat.format(locationWeather.main.temp)}°',
+                      textAlign: TextAlign.center,
+                      textScaleFactor: 7.0,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Feels like ${numberFormat.format(locationWeather.main.feelsLike)}°',
+                      textScaleFactor: 1.1,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        ListTile(
-                          leading: Icon(
-                            Icons.location_on,
-                            color: Theme.of(context).accentColor,
-                          ),
-                          title: Text(
-                            locationWeather.timezone,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                              '${dayFormat.format(now)} — ${dateFormat.format(now)}'),
-                        ),
-                        const SizedBox(
-                          height: 16.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            '${numberFormat.format(locationWeather.current.temp)}°',
-                            textAlign: TextAlign.center,
-                            textScaleFactor: 7.0,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 16.0,
-                        ),
-                        ListTile(
-                          title: Text(
-                            'Feels like ${numberFormat.format(locationWeather.current.feelsLike)}°',
-                            textScaleFactor: 1.1,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                  'Wind: ${locationWeather.current.windSpeed} m/sec'),
-                              Text(
-                                  'Humidity: ${locationWeather.current.humidity}%'),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 16.0,
-                        ),
-                        const ListTile(
-                          title: Text('Hourly'),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Divider(),
-                        ),
-                        HourlyWeatherList(),
+                        Text('Wind: ${locationWeather.wind.speed} m/sec'),
+                        Text('Humidity: ${locationWeather.main.humidity}%'),
                       ],
                     ),
-                  );
-                } else if (state is LocationRequestInProgress) {
-                  return const LinearProgressIndicator();
-                }
-                return const SizedBox.shrink();
-              },
+                  ),
+                ],
+              ),
             );
           } else {
             return const SizedBox.shrink();
