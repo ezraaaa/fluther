@@ -1,6 +1,8 @@
 import 'package:fluther/home/blocs/weather/weather_bloc.dart';
 import 'package:fluther/home/models/location_weather/location_weather.dart';
 import 'package:fluther/home/view/widgets/search_button.dart';
+import 'package:fluther/home/view/widgets/weather_details_bottom_bar.dart';
+import 'package:fluther/home/view/widgets/weather_icon.dart';
 import 'package:fluther/location/bloc/location/location_bloc.dart';
 import 'package:fluther/main/flavour_config.dart';
 import 'package:fluther/resources/strings.dart';
@@ -21,45 +23,6 @@ class _HomePageState extends State<HomePage> {
   final DateFormat dayFormat = DateFormat('EEEE');
   DateTime now;
 
-  IconData _buildWeatherIcon(String weatherMain, DateTime date) {
-    switch (weatherMain) {
-      case 'Clouds':
-        return MdiIcons.weatherCloudy;
-        break;
-      case 'Rain':
-        return MdiIcons.weatherRainy;
-        break;
-      case 'Clear':
-        if (date.hour > 17) {
-          return MdiIcons.weatherNight;
-        } else {
-          return MdiIcons.weatherSunny;
-        }
-        break;
-      case 'Tornado':
-        return MdiIcons.weatherTornado;
-        break;
-      case 'Fog':
-        return MdiIcons.weatherFog;
-        break;
-      case 'Mist':
-        return MdiIcons.weatherFog;
-        break;
-      case 'Snow':
-        return MdiIcons.weatherSnowy;
-        break;
-      case 'Drizzle':
-        return MdiIcons.weatherPartlyRainy;
-        break;
-      case 'Thunderstorm':
-        return MdiIcons.weatherLightningRainy;
-        break;
-      default:
-        return null;
-        break;
-    }
-  }
-
   @override
   void initState() {
     setState(() {
@@ -71,36 +34,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: BlocBuilder<WeatherBloc, WeatherState>(
-          builder: (BuildContext context, WeatherState state) {
-            if (state is WeatherLoadSuccess) {
-              final LocationWeather locationWeather = state.locationWeather;
-
-              return ListTile(
-                title: Text(
-                  locationWeather.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                    '${dayFormat.format(now)} — ${dateFormat.format(now)}'),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-        actions: <Widget>[
-          SearchButton(),
-        ],
-      ),
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (BuildContext context, WeatherState state) {
           if (state is WeatherLoadInProgress) {
-            return const LinearProgressIndicator();
+            return Column(
+              children: const <Widget>[
+                LinearProgressIndicator(),
+              ],
+            );
           }
           if (state is WeatherLoadSuccess) {
             final LocationWeather locationWeather = state.locationWeather;
-
             return RefreshIndicator(
               onRefresh: () async {
                 BlocProvider.of<WeatherBloc>(context).add(
@@ -110,32 +54,51 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(
-                        _buildWeatherIcon(locationWeather.weather[0].main, now),
-                        size: 50.0,
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverAppBar(
+                    snap: true,
+                    pinned: true,
+                    floating: true,
+                    title: ListTile(
+                      title: Text(
+                        locationWeather.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        '${numberFormat.format(locationWeather.main.temp)}°',
-                        textAlign: TextAlign.center,
-                        textScaleFactor: 7.0,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      OutlineButton(
-                        onPressed: () {},
-                        child: const Text('Metrics'),
-                      ),
+                      subtitle: Text(
+                          '${dayFormat.format(now)} — ${dateFormat.format(now)}'),
+                    ),
+                    actions: <Widget>[
+                      SearchButton(),
                     ],
                   ),
-                ),
+                  SliverFillRemaining(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            WeatherIcon(now),
+                            Text(
+                              '${numberFormat.format(locationWeather.main.temp)}°',
+                              textAlign: TextAlign.center,
+                              textScaleFactor: 7.0,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            OutlineButton(
+                              onPressed: () {},
+                              child: const Text('Metrics'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             );
           } else {
@@ -143,45 +106,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
-      bottomNavigationBar: BlocBuilder<WeatherBloc, WeatherState>(
-        builder: (BuildContext context, WeatherState state) {
-          if (state is WeatherLoadSuccess) {
-            final LocationWeather locationWeather = state.locationWeather;
-
-            return BottomAppBar(
-              child: ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Feels like ${numberFormat.format(locationWeather.main.feelsLike)}°',
-                      textScaleFactor: 1.1,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      ' ${locationWeather.main.tempMin}° —  ${locationWeather.main.tempMax}°',
-                      textScaleFactor: 1.1,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Wind: ${locationWeather.wind.speed} m/sec'),
-                    Text('Humidity: ${locationWeather.main.humidity}%'),
-                  ],
-                ),
-              ),
-            );
-          }
-          return const SizedBox.shrink();
-        },
-      ),
+      bottomNavigationBar: WeatherDetailsBottomBar(),
     );
   }
 }
