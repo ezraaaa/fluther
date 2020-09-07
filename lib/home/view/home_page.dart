@@ -129,6 +129,10 @@ class _HomePageState extends State<HomePage> {
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
+                      OutlineButton(
+                        onPressed: () {},
+                        child: const Text('Metrics'),
+                      ),
                     ],
                   ),
                 ),
