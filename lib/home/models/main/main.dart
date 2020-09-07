@@ -18,7 +18,7 @@ class Main {
   double temp;
   double feelsLike;
   double tempMin;
-  int tempMax;
+  double tempMax;
   int pressure;
   int humidity;
 }
