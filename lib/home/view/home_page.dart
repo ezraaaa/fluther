@@ -38,10 +38,6 @@ class _HomePageState extends State<HomePage> {
               final LocationWeather locationWeather = state.locationWeather;
 
               return ListTile(
-                leading: Icon(
-                  Icons.location_on,
-                  color: Theme.of(context).accentColor,
-                ),
                 title: Text(
                   locationWeather.name,
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -50,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                     '${dayFormat.format(now)} — ${dateFormat.format(now)}'),
               );
             }
+            return const SizedBox.shrink();
           },
         ),
         actions: <Widget>[
