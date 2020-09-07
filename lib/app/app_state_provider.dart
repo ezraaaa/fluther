@@ -33,6 +33,7 @@ class AppStateProvider extends StatelessWidget {
               return WeatherBloc(
                 weatherRepository:
                     RepositoryProvider.of<WeatherRepository>(context),
+                locationBloc: BlocProvider.of<LocationBloc>(context),
               );
             },
           ),
