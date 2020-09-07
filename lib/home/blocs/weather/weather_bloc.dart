@@ -44,9 +44,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   ) async* {
     yield WeatherLoadInProgress();
     try {
-      final LocationWeather locationWeather =
-          await weatherRepository.fetchCityWeather(
-              latitude: event.latitude, longitude: event.longitude);
+      LocationWeather locationWeather;
+      if (event.cityName != null) {
+        locationWeather =
+            await weatherRepository.fetchCityWeather(event.cityName);
+      } else {
+        locationWeather = await weatherRepository.fetchUserLocationWeather(
+            latitude: event.latitude, longitude: event.longitude);
+      }
       yield WeatherLoadSuccess(locationWeather: locationWeather);
     } catch (error) {
       print(error);
@@ -58,9 +63,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     WeatherRefreshRequested event,
   ) async* {
     try {
-      final LocationWeather locationWeather =
-          await weatherRepository.fetchCityWeather(
-              latitude: event.latitude, longitude: event.longitude);
+      LocationWeather locationWeather;
+      if (event.cityName != null) {
+        locationWeather =
+            await weatherRepository.fetchCityWeather(event.cityName);
+      } else {
+        locationWeather = await weatherRepository.fetchUserLocationWeather(
+            latitude: event.latitude, longitude: event.longitude);
+      }
       yield WeatherLoadSuccess(locationWeather: locationWeather);
     } catch (error) {
       print(error);
