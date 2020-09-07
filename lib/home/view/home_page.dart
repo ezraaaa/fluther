@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                             color: Theme.of(context).accentColor,
                           ),
                           title: Text(
-                            locationWeather.timezone,
+                            locationWeather.name,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            '${numberFormat.format(locationWeather.current.temp)}°',
+                            '${numberFormat.format(locationWeather.main.temp)}°',
                             textAlign: TextAlign.center,
                             textScaleFactor: 7.0,
                             style: TextStyle(
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         ListTile(
                           title: Text(
-                            'Feels like ${numberFormat.format(locationWeather.current.feelsLike)}°',
+                            'Feels like ${numberFormat.format(locationWeather.main.feelsLike)}°',
                             textScaleFactor: 1.1,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
@@ -104,10 +104,9 @@ class _HomePageState extends State<HomePage> {
                           subtitle: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
+                              Text('Wind: ${locationWeather.wind.speed} m/sec'),
                               Text(
-                                  'Wind: ${locationWeather.current.windSpeed} m/sec'),
-                              Text(
-                                  'Humidity: ${locationWeather.current.humidity}%'),
+                                  'Humidity: ${locationWeather.main.humidity}%'),
                             ],
                           ),
                         ),
