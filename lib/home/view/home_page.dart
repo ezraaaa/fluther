@@ -32,8 +32,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            '${strings.appTitle} ${FlavourConfig.instance.values.currentFlavour}'),
+        title: BlocBuilder<WeatherBloc, WeatherState>(
+          builder: (BuildContext context, WeatherState state) {
+            if (state is WeatherLoadSuccess) {
+              final LocationWeather locationWeather = state.locationWeather;
+
+              return ListTile(
+                leading: Icon(
+                  Icons.location_on,
+                  color: Theme.of(context).accentColor,
+                ),
+                title: Text(
+                  locationWeather.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                    '${dayFormat.format(now)} — ${dateFormat.format(now)}'),
+              );
+            }
+          },
+        ),
         actions: <Widget>[
           SearchButton(),
         ],
@@ -55,72 +73,63 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: ListView(
-                children: <Widget>[
-                  ListTile(
-                    leading: Icon(
-                      Icons.location_on,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    title: Text(
-                      locationWeather.name,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                        '${dayFormat.format(now)} — ${dateFormat.format(now)}'),
-                  ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      '${numberFormat.format(locationWeather.main.temp)}°',
-                      textAlign: TextAlign.center,
-                      textScaleFactor: 7.0,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    '${numberFormat.format(locationWeather.main.temp)}°',
+                    textAlign: TextAlign.center,
+                    textScaleFactor: 7.0,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Feels like ${numberFormat.format(locationWeather.main.feelsLike)}°',
-                          textScaleFactor: 1.1,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          ' ${locationWeather.main.tempMin}° —  ${locationWeather.main.tempMax}°',
-                          textScaleFactor: 1.1,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('Wind: ${locationWeather.wind.speed} m/sec'),
-                        Text('Humidity: ${locationWeather.main.humidity}%'),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
             );
           } else {
             return const SizedBox.shrink();
           }
+        },
+      ),
+      bottomNavigationBar: BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (BuildContext context, WeatherState state) {
+          if (state is WeatherLoadSuccess) {
+            final LocationWeather locationWeather = state.locationWeather;
+
+            return BottomAppBar(
+              child: ListTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Feels like ${numberFormat.format(locationWeather.main.feelsLike)}°',
+                      textScaleFactor: 1.1,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      ' ${locationWeather.main.tempMin}° —  ${locationWeather.main.tempMax}°',
+                      textScaleFactor: 1.1,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Wind: ${locationWeather.wind.speed} m/sec'),
+                    Text('Humidity: ${locationWeather.main.humidity}%'),
+                  ],
+                ),
+              ),
+            );
+          }
+          return const SizedBox.shrink();
         },
       ),
     );
