@@ -88,12 +88,24 @@ class _HomePageState extends State<HomePage> {
                     height: 16.0,
                   ),
                   ListTile(
-                    title: Text(
-                      'Feels like ${numberFormat.format(locationWeather.main.feelsLike)}°',
-                      textScaleFactor: 1.1,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Feels like ${numberFormat.format(locationWeather.main.feelsLike)}°',
+                          textScaleFactor: 1.1,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          ' ${locationWeather.main.tempMin}° —  ${locationWeather.main.tempMax}°',
+                          textScaleFactor: 1.1,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
                     ),
                     subtitle: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
