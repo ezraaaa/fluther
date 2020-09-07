@@ -22,19 +22,11 @@ class _HomePageState extends State<HomePage> {
   DateTime now;
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     setState(() {
       now = DateTime.now();
     });
-    BlocProvider.of<LocationBloc>(context).listen((LocationState state) {
-      if (state is LocationRequestSuccess) {
-        BlocProvider.of<WeatherBloc>(context).add(WeatherRequested(
-          latitude: state.position.latitude,
-          longitude: state.position.longitude,
-        ));
-      }
-    });
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
