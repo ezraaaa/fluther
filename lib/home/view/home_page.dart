@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,6 +20,45 @@ class _HomePageState extends State<HomePage> {
   final DateFormat dateFormat = DateFormat('MMMM d');
   final DateFormat dayFormat = DateFormat('EEEE');
   DateTime now;
+
+  IconData _buildWeatherIcon(String weatherMain, DateTime date) {
+    switch (weatherMain) {
+      case 'Clouds':
+        return MdiIcons.weatherCloudy;
+        break;
+      case 'Rain':
+        return MdiIcons.weatherRainy;
+        break;
+      case 'Clear':
+        if (date.hour > 17) {
+          return MdiIcons.weatherNight;
+        } else {
+          return MdiIcons.weatherSunny;
+        }
+        break;
+      case 'Tornado':
+        return MdiIcons.weatherTornado;
+        break;
+      case 'Fog':
+        return MdiIcons.weatherFog;
+        break;
+      case 'Mist':
+        return MdiIcons.weatherFog;
+        break;
+      case 'Snow':
+        return MdiIcons.weatherSnowy;
+        break;
+      case 'Drizzle':
+        return MdiIcons.weatherPartlyRainy;
+        break;
+      case 'Thunderstorm':
+        return MdiIcons.weatherLightningRainy;
+        break;
+      default:
+        return null;
+        break;
+    }
+  }
 
   @override
   void initState() {
@@ -73,14 +113,23 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    '${numberFormat.format(locationWeather.main.temp)}°',
-                    textAlign: TextAlign.center,
-                    textScaleFactor: 7.0,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Icon(
+                        _buildWeatherIcon(locationWeather.weather[0].main, now),
+                        size: 50.0,
+                      ),
+                      Text(
+                        '${numberFormat.format(locationWeather.main.temp)}°',
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 7.0,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
