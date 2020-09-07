@@ -40,7 +40,7 @@ dependencies:
   shimmer:
   undraw:
     git: https://github.com/kay4ik/undraw
-  location:
+  geolocator:
   http:
 
 dev_dependencies:
