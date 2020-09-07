@@ -36,10 +36,6 @@ dependencies:
   json_annotation:
   intl:
   material_design_icons_flutter:
-  flutter_advanced_networkimage:
-  shimmer:
-  undraw:
-    git: https://github.com/kay4ik/undraw
   geolocator:
   http:
 

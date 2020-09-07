@@ -223,13 +223,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_advanced_networkimage:
-    dependency: "direct main"
-    description:
-      name: flutter_advanced_networkimage
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -244,13 +237,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.5"
-  flutter_svg:
-    dependency: transitive
-    description:
-      name: flutter_svg
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.17.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -431,20 +417,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety"
-  path_drawing:
-    dependency: transitive
-    description:
-      name: path_drawing
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.1+1"
-  path_parsing:
-    dependency: transitive
-    description:
-      name: path_parsing
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   path_provider:
     dependency: transitive
     description:
@@ -557,13 +529,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.3"
-  shimmer:
-    dependency: "direct main"
-    description:
-      name: shimmer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -639,15 +604,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0-nullsafety.2"
-  undraw:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: a529ad20618df7e1acc8d77f18e27b5ee0e05151
-      url: "https://github.com/kay4ik/undraw"
-    source: git
-    version: "1.0.2"
   vector_math:
     dependency: transitive
     description:
