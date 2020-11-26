@@ -38,6 +38,9 @@ dependencies:
   material_design_icons_flutter:
   geolocator:
   http:
+  shimmer:
+  undraw:
+    git: https://github.com/kay4ik/undraw
 
 dev_dependencies:
   flutter_test:
