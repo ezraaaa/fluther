@@ -49,6 +49,8 @@ dev_dependencies:
   build_runner:
   flutter_launcher_icons:
 
+dependency_overrides:
+  flutter_svg: ^0.19.2+1
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
