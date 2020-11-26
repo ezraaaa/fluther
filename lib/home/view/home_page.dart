@@ -3,14 +3,9 @@ import 'package:fluther/home/models/location_weather/location_weather.dart';
 import 'package:fluther/home/view/widgets/search_button.dart';
 import 'package:fluther/home/view/widgets/weather_details_bottom_bar.dart';
 import 'package:fluther/home/view/widgets/weather_icon.dart';
-import 'package:fluther/location/bloc/location/location_bloc.dart';
-import 'package:fluther/main/flavour_config.dart';
-import 'package:fluther/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
