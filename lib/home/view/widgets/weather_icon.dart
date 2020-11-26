@@ -64,10 +64,7 @@ class _WeatherIconState extends State<WeatherIcon> {
             size: 50.0,
           );
         } else if (state is WeatherLoadFailure) {
-          return const Icon(
-            Icons.error_outline,
-            size: 50.0,
-          );
+          return const SizedBox.shrink();
         } else {
           return Loader(
             isShimmer: true,
