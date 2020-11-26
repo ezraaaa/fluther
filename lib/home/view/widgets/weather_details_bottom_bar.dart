@@ -59,14 +59,8 @@ class _WeatherDetailsBottomBarState extends State<WeatherDetailsBottomBar> {
       isShimmer: true,
       child: Row(
         children: const <Widget>[
-          SizedBox(
-            width: 100.0,
-            height: 16.0,
-          ),
-          SizedBox(
-            width: 100.0,
-            height: 16.0,
-          ),
+          Text('Loading'),
+          Text('Loading'),
         ],
       ),
     );

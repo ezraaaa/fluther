@@ -1,3 +1,4 @@
+import 'package:fluther/common_widgets/loader.dart';
 import 'package:fluther/home/blocs/weather/weather_bloc.dart';
 import 'package:fluther/home/models/location_weather/location_weather.dart';
 import 'package:flutter/material.dart';
@@ -56,13 +57,30 @@ class _WeatherIconState extends State<WeatherIcon> {
   Widget build(BuildContext context) {
     return BlocBuilder<WeatherBloc, WeatherState>(
       builder: (BuildContext context, WeatherState state) {
-        final LocationWeather locationWeather =
-            (state as WeatherLoadSuccess).locationWeather;
-
-        return Icon(
-          _buildWeatherIcon(locationWeather.weather[0].main, widget.now),
-          size: 50.0,
-        );
+        if (state is WeatherLoadSuccess) {
+          final LocationWeather locationWeather = state.locationWeather;
+          return Icon(
+            _buildWeatherIcon(locationWeather.weather[0].main, widget.now),
+            size: 50.0,
+          );
+        } else if (state is WeatherLoadFailure) {
+          return const Icon(
+            Icons.error_outline,
+            size: 50.0,
+          );
+        } else {
+          return Loader(
+            isShimmer: true,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).dividerColor,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              height: 50.0,
+              width: 50.0,
+            ),
+          );
+        }
       },
     );
   }

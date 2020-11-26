@@ -1,6 +1,8 @@
+import 'package:fluther/common_widgets/loader.dart';
 import 'package:fluther/home/blocs/weather/weather_bloc.dart';
 import 'package:fluther/home/models/location_weather/location_weather.dart';
 import 'package:fluther/home/view/widgets/search_button.dart';
+import 'package:fluther/home/view/widgets/temperature.dart';
 import 'package:fluther/home/view/widgets/weather_details_bottom_bar.dart';
 import 'package:fluther/home/view/widgets/weather_icon.dart';
 import 'package:flutter/material.dart';
@@ -29,77 +31,59 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<WeatherBloc, WeatherState>(
-        builder: (BuildContext context, WeatherState state) {
-          if (state is WeatherLoadInProgress) {
-            return Column(
-              children: const <Widget>[
-                LinearProgressIndicator(),
-              ],
-            );
-          }
-          if (state is WeatherLoadSuccess) {
-            final LocationWeather locationWeather = state.locationWeather;
-            return RefreshIndicator(
-              onRefresh: () async {
-                BlocProvider.of<WeatherBloc>(context).add(
-                  WeatherRefreshRequested(
-                    latitude: locationWeather.coordinates.latitude,
-                    longitude: locationWeather.coordinates.longitude,
-                  ),
-                );
-              },
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    snap: true,
-                    pinned: true,
-                    floating: true,
-                    title: ListTile(
-                      title: Text(
-                        locationWeather.name,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                          '${dayFormat.format(now)} — ${dateFormat.format(now)}'),
-                    ),
-                    actions: <Widget>[
-                      SearchButton(),
-                    ],
-                  ),
-                  SliverFillRemaining(
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            WeatherIcon(now),
-                            Text(
-                              '${numberFormat.format(locationWeather.main.temp)}°',
-                              textAlign: TextAlign.center,
-                              textScaleFactor: 7.0,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            OutlineButton(
-                              onPressed: () {},
-                              child: const Text('Metrics'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            snap: true,
+            pinned: true,
+            floating: true,
+            title: ListTile(
+              title: BlocBuilder<WeatherBloc, WeatherState>(
+                builder: (BuildContext context, WeatherState state) {
+                  if (state is WeatherLoadSuccess) {
+                    final LocationWeather locationWeather =
+                        state.locationWeather;
+
+                    return Text(
+                      locationWeather.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    );
+                  } else if (state is WeatherLoadFailure) {
+                    return const Text('Fail to load');
+                  } else {
+                    return const Loader(
+                      isShimmer: true,
+                      child: Text('Loading'),
+                    );
+                  }
+                },
               ),
-            );
-          } else {
-            return const SizedBox.shrink();
-          }
-        },
+              subtitle:
+                  Text('${dayFormat.format(now)} — ${dateFormat.format(now)}'),
+            ),
+            actions: <Widget>[
+              SearchButton(),
+            ],
+          ),
+          SliverFillRemaining(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    WeatherIcon(now),
+                    Temperature(),
+                    OutlineButton(
+                      onPressed: () {},
+                      child: const Text('Metrics'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
       bottomNavigationBar: WeatherDetailsBottomBar(),
     );
