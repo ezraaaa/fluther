@@ -18,8 +18,10 @@ ThemeData _buildTheme() {
       centerTitle: false,
       brightness: Brightness.light,
     ),
-    textSelectionColor: Colors.lightBlue.withOpacity(0.25),
-    textSelectionHandleColor: Colors.lightBlue,
+    textSelectionTheme: TextSelectionThemeData(
+      selectionColor: Colors.lightBlue.withOpacity(0.25),
+      selectionHandleColor: Colors.lightBlue,
+    ),
     scaffoldBackgroundColor: Colors.white,
     canvasColor: Colors.white,
     dialogTheme: DialogTheme(
