@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - "geolocator (6.0.0+3)":
+  - "geolocator (6.0.0+4)":
     - Flutter
   - path_provider (0.0.1):
     - Flutter
@@ -20,9 +20,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  geolocator: ba89529b110425143bd41707cc6853648df94b6a
+  geolocator: 1ae40084cc6c1586ce5ad12cfc3fd38c64d05f2f
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3
